@@ -92,14 +92,13 @@ namespace Ciceksepeti.Business.Service
         public async Task<ApiResponse> GetAll(Guid userId)
         {
             var result = await _cartRepository.GetAll(userId);
-
             return result;
         }
 
-        public async Task<ApiResponse> Delete(CartRequestDto request)
+        public ApiResponse Delete(CartRequestDto request)
         {
             var entity = request.MapTo<Cart>();
-            var result = await _cartRepository.Delete(entity);
+            var result = _cartRepository.Delete(entity);
             return result;
         }
 

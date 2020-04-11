@@ -6,10 +6,10 @@ namespace Ciceksepeti.Dto.ApiResponse
     {
         public HttpStatusCode ResultCode { get; set; }
         public string Message { get; set; }
-        public dynamic Data { get; set; }
+        public object Data { get; set; }
         public bool IsSuccess { get; set; }
 
-        public ApiResponse(string message = null, HttpStatusCode? resultCode = null, dynamic data = null, bool isSuccess = false)
+        public ApiResponse(string message = null, HttpStatusCode? resultCode = null, object data = null, bool isSuccess = false)
         {
             ResultCode = resultCode ?? HttpStatusCode.SeeOther;
             Data = data;

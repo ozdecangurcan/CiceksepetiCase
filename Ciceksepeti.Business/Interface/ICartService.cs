@@ -8,9 +8,12 @@ namespace Ciceksepeti.Business.Interface
     public interface ICartService
     {
         Task<ApiResponse> Add(CartRequestDto requet);
+
         ApiResponse Update(CartRequestDto request);
+
         Task<ApiResponse> GetAll(Guid userId);
-        Task<ApiResponse> Delete(CartRequestDto request);
+
+        ApiResponse Delete(CartRequestDto request);
 
         ApiResponse UpdateCartUser(UpdateCartUserDto request);
     }

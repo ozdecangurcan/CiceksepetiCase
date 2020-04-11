@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Ciceksepeti.Business\Ciceksepeti.Business.csproj" />
     <ProjectReference Include="..\Ciceksepeti.DataAccess\Ciceksepeti.DataAccess.csproj" />
   </ItemGroup>
 

@@ -6,6 +6,6 @@ namespace Ciceksepeti.Core.Repository
 {
     public interface IDelete
     {
-        Task<ApiResponse> Delete(Cart entity);
+        ApiResponse Delete(Cart entity);
     }
 }

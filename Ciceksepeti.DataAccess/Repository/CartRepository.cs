@@ -32,10 +32,10 @@ namespace Ciceksepeti.DataAccess.Service
            return  _context.Carts.Where(x => x.UserId == userId).Count();
         }
 
-        public async Task<ApiResponse> Delete(Cart entity)
+        public ApiResponse Delete(Cart entity)
         {
             _context.Remove(entity);
-            var affectedRows = await _context.SaveChangesAsync();
+            var affectedRows = _context.SaveChanges();
             return ApiResponse.ReturnAsSuccess(data: affectedRows);
         }
 
