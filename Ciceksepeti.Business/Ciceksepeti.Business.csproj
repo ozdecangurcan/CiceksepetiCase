@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="BaseInterface\**" />
+    <EmbeddedResource Remove="BaseInterface\**" />
+    <None Remove="BaseInterface\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions" Version="2.1.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Ciceksepeti.DataAccess\Ciceksepeti.DataAccess.csproj" />
+    <ProjectReference Include="..\Ciceksepeti.Dto\Ciceksepeti.Dto.csproj" />
+  </ItemGroup>
+
+</Project>
