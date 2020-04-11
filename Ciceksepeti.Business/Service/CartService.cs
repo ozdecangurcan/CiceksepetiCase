@@ -91,7 +91,13 @@ namespace Ciceksepeti.Business.Service
 
         public async Task<ApiResponse> GetAll(Guid userId)
         {
+            if (!GuidIsValid(userId))
+            {
+                return ApiResponse.ReturnAsNotFound();
+            }
+
             var result = await _cartRepository.GetAll(userId);
+
             return result;
         }
 
@@ -124,6 +130,18 @@ namespace Ciceksepeti.Business.Service
         private bool IsCartSizeOver(Guid customerId)
         {
             return _cartRepository.CartSize(customerId) > 30;
+        }
+
+        private bool GuidIsValid(Guid guid)
+        {
+            var parseGuidControl = Guid.TryParse(guid.ToString(), out var parseGuid);
+
+            if (!parseGuidControl || parseGuid == Guid.Empty)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         #endregion
