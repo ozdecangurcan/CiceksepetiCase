@@ -1,17 +1,13 @@
 ﻿using Ciceksepeti.Entity;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
 namespace Ciceksepeti.DataAccess
 {
- 
-    public class CartContext:DbContext
+    public class CartContext : DbContext
     {
-
-
         public CartContext(DbContextOptions options) : base(options)
         {
-            
+
         }
 
         public DbSet<Cart> Carts { get; set; }

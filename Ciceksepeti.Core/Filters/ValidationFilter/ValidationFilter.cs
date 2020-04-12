@@ -1,5 +1,4 @@
-﻿using Ciceksepeti.Core.Filters.Model;
-using Ciceksepeti.Dto.ApiResponse;
+﻿using Ciceksepeti.Dto.ApiResponse;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System.Collections.Generic;

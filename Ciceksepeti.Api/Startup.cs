@@ -16,13 +16,9 @@ namespace Ciceksepeti.Api
 {
     public class Startup
     {
-        public Startup(IWebHostEnvironment environment)
+        public Startup(IConfiguration configuration)
         {
-            Configuration = new ConfigurationBuilder()
-                .SetBasePath(environment.ContentRootPath)
-                .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true)
-                .AddEnvironmentVariables()
-                .Build();
+            Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -31,12 +27,10 @@ namespace Ciceksepeti.Api
         public void ConfigureServices(IServiceCollection services)
         {
             #region Db Connection
-            //TODO Db Con
-            var asd = "Server=localhost\\MSSQLSERVER01;Database = CartDb;Trusted_Connection = True;Integrated Security = True;";
-
-            services.AddDbContext<CartContext>(options => options.UseSqlServer(asd));
-
-            //services.AddDbContext<CartContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
+            services.AddDbContext<CartContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+            );
 
             #endregion
 

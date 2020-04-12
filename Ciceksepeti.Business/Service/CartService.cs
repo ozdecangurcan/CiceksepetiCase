@@ -1,21 +1,21 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Ciceksepeti.Business.Interface;
-using Ciceksepeti.DataAccess;
 using Ciceksepeti.DataAccess.Interface;
 using Ciceksepeti.Dto.ApiResponse;
 using Ciceksepeti.Dto.Cart;
 using Ciceksepeti.Entity;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ciceksepeti.Business.Service
 {
     public class CartService : ICartService
     {
         private readonly ICartRepository _cartRepository;
+        private const int CART_SIZE_LIMIT = 5;
 
-        public CartService(CartContext context, ICartRepository cartRepository)
+        public CartService(ICartRepository cartRepository)
         {
             _cartRepository = cartRepository;
         }
@@ -25,13 +25,13 @@ namespace Ciceksepeti.Business.Service
             //Sepete boyutu aşıldı mı
             if (!IsCartSizeOver(request.UserId))
             {
-                return ApiResponse.ReturnAsFail();
+                return ApiResponse.ReturnAsFail(data: null, "Toplam sepet kapasitesini aştınız");
             }
 
             //Eklenen ürün stokda var mı
             if (!IsItemInStock(request.ProductId))
             {
-                return ApiResponse.ReturnAsFail();
+                return ApiResponse.ReturnAsFail(data: null, "Eklenen Ürün Stokta Yoktur");
             }
 
             //Ürünü ait maksimum ekleme sınırı aşıldı mı
@@ -129,7 +129,7 @@ namespace Ciceksepeti.Business.Service
 
         private bool IsCartSizeOver(Guid customerId)
         {
-            return _cartRepository.CartSize(customerId) > 30;
+            return _cartRepository.CartSize(customerId) < CART_SIZE_LIMIT;
         }
 
         private bool GuidIsValid(Guid guid)

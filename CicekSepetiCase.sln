@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ciceksepeti.Dto", "Ciceksep
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ciceksepeti.Core", "Ciceksepeti.Core\Ciceksepeti.Core.csproj", "{C2ADE2A7-58C0-4718-98C2-9F900ADE846E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ciceksepeti.Api", "Ciceksepeti.Api\Ciceksepeti.Api.csproj", "{23EA9DF2-A724-4ED1-8799-CE32245342E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ciceksepeti.Api", "Ciceksepeti.Api\Ciceksepeti.Api.csproj", "{23EA9DF2-A724-4ED1-8799-CE32245342E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ciceksepeti.Test", "Ciceksepeti.Test\Ciceksepeti.Test.csproj", "{A8AAE26F-45A9-423B-B541-E9E07EE8DE29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{23EA9DF2-A724-4ED1-8799-CE32245342E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{23EA9DF2-A724-4ED1-8799-CE32245342E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23EA9DF2-A724-4ED1-8799-CE32245342E7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8AAE26F-45A9-423B-B541-E9E07EE8DE29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8AAE26F-45A9-423B-B541-E9E07EE8DE29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8AAE26F-45A9-423B-B541-E9E07EE8DE29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8AAE26F-45A9-423B-B541-E9E07EE8DE29}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

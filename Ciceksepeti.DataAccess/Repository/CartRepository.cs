@@ -1,12 +1,10 @@
-﻿using Ciceksepeti.Core.Repository;
-using Ciceksepeti.DataAccess.Interface;
+﻿using Ciceksepeti.DataAccess.Interface;
 using Ciceksepeti.Dto.ApiResponse;
 using Ciceksepeti.Dto.Cart;
 using Ciceksepeti.Entity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
 
 namespace Ciceksepeti.DataAccess.Service
@@ -29,6 +27,7 @@ namespace Ciceksepeti.DataAccess.Service
 
         public int CartSize(Guid userId)
         {
+            
            return  _context.Carts.Where(x => x.UserId == userId).Count();
         }
 
