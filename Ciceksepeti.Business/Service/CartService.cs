@@ -4,6 +4,7 @@ using Ciceksepeti.Dto.ApiResponse;
 using Ciceksepeti.Dto.Cart;
 using Ciceksepeti.Entity;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -65,6 +66,21 @@ namespace Ciceksepeti.Business.Service
 
             var result = await _cartRepository.Add(entity);
 
+            if (result.Data != null)
+            {
+                var returnData = result.Data as Cart;
+
+                var mappedData = new CartResponseDto
+                {
+                    Id = returnData.Id,
+                    UserId = returnData.UserId,
+                    Quantity = returnData.Quantity,
+                    ProductId = returnData.ProductId
+                };
+
+                result.Data = mappedData;
+            }
+
             return result;
         }
 
@@ -109,6 +125,21 @@ namespace Ciceksepeti.Business.Service
 
             var result = _cartRepository.Update(entity);
 
+            if (result.Data != null)
+            {
+                var returnData = result.Data as Cart;
+
+                var mappedData = new CartResponseDto
+                {
+                    Id = returnData.Id,
+                    UserId = returnData.UserId,
+                    Quantity = returnData.Quantity,
+                    ProductId = returnData.ProductId
+                };
+
+                result.Data = mappedData;
+            }
+
             return result;
         }
 
@@ -125,6 +156,28 @@ namespace Ciceksepeti.Business.Service
             }
 
             var result = await _cartRepository.GetAll(userId);
+
+            if (result.Data != null)
+            {
+                var cartResponseList = new List<CartResponseDto>();
+
+                var cartItems = result.Data as List<Cart>;
+
+                foreach (var item in cartItems)
+                {
+                    var mappedData = new CartResponseDto
+                    {
+                        Id = item.Id,
+                        ProductId = item.ProductId,
+                        Quantity = item.Quantity,
+                        UserId = item.UserId
+                    };
+
+                    cartResponseList.Add(mappedData);
+                }
+
+                result.Data = new CartResponseListDto { CartList = cartResponseList };
+            }
 
             return result;
         }
