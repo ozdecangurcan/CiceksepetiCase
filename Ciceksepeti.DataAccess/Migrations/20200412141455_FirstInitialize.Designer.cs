@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Ciceksepeti.DataAccess.Migrations
 {
     [DbContext(typeof(CartContext))]
-    [Migration("20200411140213_CartTableEdited")]
-    partial class CartTableEdited
+    [Migration("20200412141455_FirstInitialize")]
+    partial class FirstInitialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
