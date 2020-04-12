@@ -1,7 +1,10 @@
 ﻿using Ciceksepeti.Core.Filters.Model;
+using Ciceksepeti.Dto.ApiResponse;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace Ciceksepeti.Core.Filters.ValidationFilter
@@ -16,22 +19,25 @@ namespace Ciceksepeti.Core.Filters.ValidationFilter
                     .Where(x => x.Value.Errors.Count > 0)
                     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value.Errors.Select(x => x.ErrorMessage)).ToArray();
 
-                ErrorResponse errorReponse = new ErrorResponse();
+                List<ApiResponse> responseList = new List<ApiResponse>();
 
                 foreach (var error in errorsInModelState)
                 {
                     foreach (var subError in error.Value)
                     {
-                        var errorModel = new ErrorModel
+                        var response = new ApiResponse
                         {
-                            FieldName = error.Key,
-                            Message = subError
+                            ResultCode = HttpStatusCode.BadRequest,
+                            Data=error.Key,
+                            Message = subError,
+                            IsSuccess=false
                         };
 
-                        errorReponse.Errors.Add(errorModel);
+                        responseList.Add(response);
                     }
                 }
-                context.Result = new BadRequestObjectResult(errorReponse);
+
+                context.Result = new BadRequestObjectResult(responseList);
                 return;
             }
 
