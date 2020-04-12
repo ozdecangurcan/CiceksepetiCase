@@ -30,26 +30,46 @@ namespace Ciceksepeti.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            #region Db Connection
             //TODO Db Con
             var asd = "Server=localhost\\MSSQLSERVER01;Database = CartDb;Trusted_Connection = True;Integrated Security = True;";
+
             services.AddDbContext<CartContext>(options => options.UseSqlServer(asd));
+
             //services.AddDbContext<CartContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            #endregion
+
+            #region Services DI
+
             services.AddTransient<Business.Interface.ICartService, Business.Service.CartService>();
+
             services.AddTransient<DataAccess.Interface.ICartRepository, DataAccess.Service.CartRepository>();
+
+            #endregion
+
+            #region Swagger
 
             services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo { Title = "CicekSepeti", Version = "v1" });
             });
 
+            #endregion
+
+            #region Fluent Validation DI
+
             services.AddTransient<IValidator<CartRequestDto>, CartRequestDtoValidation>();
+
+            services.AddTransient<IValidator<UpdateCartUserDto>, UpdateCartUserDtoValidation>();
 
             services.AddControllers(options=> { options.Filters.Add<ValidationFilter>(); })
                 .AddFluentValidation(opt =>
             {
                 opt.RegisterValidatorsFromAssemblyContaining<Startup>();
             });
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
