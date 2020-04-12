@@ -193,6 +193,7 @@ namespace Ciceksepeti.Business.Service
             {
                 Id = request.Id
             };
+
             var result = _cartRepository.Delete(entity);
             return result;
         }

@@ -77,5 +77,98 @@ namespace Ciceksepeti.Test
             Assert.AreEqual(result.Data, null);
             Assert.AreEqual(result.ResultCode, HttpStatusCode.BadRequest);
         }
+
+        [Test]
+        public async Task Add_Item_To_Cart_Max_Quantity_Over_Test()
+        {
+            var result = await _cartService.Add(new CartRequestDto
+            {
+                ProductId = Guid.Parse("ed9829b9-684e-49a2-9287-332e6827076a"),
+                UserId = Guid.NewGuid(),
+                Quantity = 6
+            });
+
+            var maxQuantity = ProductService.GetProducts().FirstOrDefault(x => x.ProductId == Guid.Parse("ed9829b9-684e-49a2-9287-332e6827076a")).MaxCartQuantity;
+
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(result.ResultCode, HttpStatusCode.OK);
+
+            var resultData = result.Data as CartResponseDto;
+            Assert.AreEqual(resultData.Quantity, maxQuantity);
+        }
+
+        [Test]
+        public async Task Add_Item_To_Cart_Stock_Quantity_Over_Test()
+        {
+            var result = await _cartService.Add(new CartRequestDto
+            {
+                ProductId = Guid.Parse("43f18e01-28c5-468a-b688-c1a896a7291a"),
+                UserId = Guid.NewGuid(),
+                Quantity = 16
+            });
+
+            var stockQuantity = ProductService.GetProducts().FirstOrDefault(x => x.ProductId == Guid.Parse("43f18e01-28c5-468a-b688-c1a896a7291a")).Quantity;
+
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(result.ResultCode, HttpStatusCode.OK);
+
+            var resultData = result.Data as CartResponseDto;
+            Assert.AreEqual(resultData.Quantity, stockQuantity);
+        }
+
+        [Test]
+        public async Task Add_Item_To_Cart_Passed_All_Validations()
+        {
+            var result = await _cartService.Add(new CartRequestDto
+            {
+                ProductId = Guid.Parse("43f18e01-28c5-468a-b688-c1a896a7291a"),
+                UserId = Guid.NewGuid(),
+                Quantity = 1
+            });
+
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(result.ResultCode, HttpStatusCode.OK);
+            Assert.NotNull(result.Data);
+        }
+
+        [Test]
+        public async Task Get_Cart_List_Wrong_Guid()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                _fakeDbContext.Carts.Add(new Cart
+                {
+                    ProductId = Guid.NewGuid(),
+                    Quantity = 1,
+                    UserId = Guid.Parse("05d2f53a-d949-4984-85ec-b8326375ee78")
+                });
+            }
+
+            var result = await _cartService.GetAll(Guid.Empty);
+
+            Assert.IsFalse(result.IsSuccess);
+            Assert.AreEqual(result.ResultCode, HttpStatusCode.NotFound);
+        }
+
+        [Test]
+        public async Task Get_Cart_List_Success()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                await _fakeDbContext.Carts.AddAsync(new Cart
+                {
+                    ProductId = Guid.NewGuid(),
+                    Quantity = 1,
+                    UserId = Guid.Parse("05d2f53a-d949-4984-85ec-b8326375ee78")
+                });
+            }
+
+            await _fakeDbContext.SaveChangesAsync();
+
+            var result = await _cartService.GetAll(Guid.Parse("05d2f53a-d949-4984-85ec-b8326375ee78"));
+
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(result.ResultCode, HttpStatusCode.OK);
+        }
     }
 }
