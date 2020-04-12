@@ -55,7 +55,11 @@ namespace Ciceksepeti.Api
 
             services.AddTransient<IValidator<CartRequestDto>, CartRequestDtoValidation>();
 
-            services.AddTransient<IValidator<UpdateCartUserDto>, UpdateCartUserDtoValidation>();
+            services.AddTransient<IValidator<UpdateCartUserRequestDto>, UpdateCartUserDtoValidation>();
+
+            services.AddTransient<IValidator<CartUpdateRequestDto>, CartUpdateRequestDtoValidation>();
+
+            services.AddTransient<IValidator<CartDeleteRequestDto>, CartDeleteRequestDtoValidation>();
 
             services.AddControllers(options=> { options.Filters.Add<ValidationFilter>(); })
                 .AddFluentValidation(opt =>

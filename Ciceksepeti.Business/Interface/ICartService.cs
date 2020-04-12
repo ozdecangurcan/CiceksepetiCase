@@ -9,12 +9,12 @@ namespace Ciceksepeti.Business.Interface
     {
         Task<ApiResponse> Add(CartRequestDto requet);
 
-        ApiResponse Update(CartRequestDto request);
+        ApiResponse Update(CartUpdateRequestDto request);
 
         Task<ApiResponse> GetAll(Guid userId);
 
-        ApiResponse Delete(CartRequestDto request);
+        ApiResponse Delete(CartDeleteRequestDto request);
 
-        ApiResponse UpdateCartUser(UpdateCartUserDto request);
+        ApiResponse UpdateCartUser(UpdateCartUserRequestDto request);
     }
 }

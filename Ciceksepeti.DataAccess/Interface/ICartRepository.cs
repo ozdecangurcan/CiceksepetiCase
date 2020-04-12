@@ -12,6 +12,6 @@ namespace Ciceksepeti.DataAccess.Interface
 
         int CartSize(Guid userId);
 
-        ApiResponse UpdateCartUser(UpdateCartUserDto request);
+        ApiResponse UpdateCartUser(UpdateCartUserRequestDto request);
     }
 }

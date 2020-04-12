@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Ciceksepeti.Dto.Cart
 {
-    public class UpdateCartUserDto
+    public class UpdateCartUserRequestDto
     {
         public Guid UserId { get; set; }
 

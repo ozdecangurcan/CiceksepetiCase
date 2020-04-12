@@ -22,12 +22,12 @@ namespace Ciceksepeti.Business.ValidationRules
                 });
 
             RuleFor(x => x.UserId)
-                .Custom((productId, context) => 
+                .Custom((userId, context) => 
                 { 
-                    var parseGuidControl = Guid.TryParse(productId.ToString(), out var parseGuid); 
+                    var parseGuidControl = Guid.TryParse(userId.ToString(), out var parseGuid); 
                     if (!parseGuidControl || parseGuid == Guid.Empty) 
                     { 
-                        context.AddFailure("Hatalı Ürün Numarası"); 
+                        context.AddFailure("Hatalı Kullanıcı Numarası"); 
                     } 
                 });
         }

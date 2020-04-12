@@ -52,7 +52,7 @@ namespace Ciceksepeti.Api.Controllers
 
 
         [HttpPut("UpdateItem")]
-        public ApiResponse UpdateCartItem([FromBody]CartRequestDto request)
+        public ApiResponse UpdateCartItem([FromBody]CartUpdateRequestDto request)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace Ciceksepeti.Api.Controllers
 
 
         [HttpDelete("DeleteItem")]
-        public ApiResponse DeleteCartItem([FromBody]CartRequestDto request)
+        public ApiResponse DeleteCartItem([FromBody]CartDeleteRequestDto request)
         {
             try
             {
@@ -80,7 +80,7 @@ namespace Ciceksepeti.Api.Controllers
         }
 
         [HttpPut("UpdateCartUser")]
-        public ApiResponse UpdateCartUser([FromBody]UpdateCartUserDto request)
+        public ApiResponse UpdateCartUser([FromBody]UpdateCartUserRequestDto request)
         {
             try
             {

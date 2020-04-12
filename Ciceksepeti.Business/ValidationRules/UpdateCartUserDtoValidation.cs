@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Ciceksepeti.Business.ValidationRules
 {
-    public class UpdateCartUserDtoValidation : AbstractValidator<UpdateCartUserDto>
+    public class UpdateCartUserDtoValidation : AbstractValidator<UpdateCartUserRequestDto>
     {
         public UpdateCartUserDtoValidation()
         {
@@ -28,7 +28,7 @@ namespace Ciceksepeti.Business.ValidationRules
 
                     if (!parseGuidControl || parseGuid == Guid.Empty)
                     {
-                        context.AddFailure("Hatalı Ürün Numarası");
+                        context.AddFailure("Hatalı Kullanıcı Numarası");
                     }
                 });
         }

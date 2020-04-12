@@ -51,13 +51,19 @@ namespace Ciceksepeti.DataAccess.Service
             return ApiResponse.ReturnAsSuccess(data: affectedRows);
         }
 
-        public ApiResponse UpdateCartUser(UpdateCartUserDto request)
+        public ApiResponse UpdateCartUser(UpdateCartUserRequestDto request)
         {
             var cart = _context.Carts.Where(x => x.UserId == request.SessionId).ToList();
-            cart.ForEach(x => x.UserId = request.UserId);
-            _context.UpdateRange(cart);
-            var affectedRows = _context.SaveChanges();
-            return  ApiResponse.ReturnAsSuccess(data: affectedRows);
+
+            if (cart.Any())
+            {
+                cart.ForEach(x => x.UserId = request.UserId);
+                _context.UpdateRange(cart);
+                var affectedRows = _context.SaveChanges();
+                return ApiResponse.ReturnAsSuccess(data: affectedRows);
+            }
+
+            return ApiResponse.ReturnAsInformation();
         }
     }
 }

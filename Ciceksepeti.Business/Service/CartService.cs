@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using Ciceksepeti.Business.Interface;
+﻿using Ciceksepeti.Business.Interface;
 using Ciceksepeti.DataAccess.Interface;
 using Ciceksepeti.Dto.ApiResponse;
 using Ciceksepeti.Dto.Cart;
@@ -20,9 +19,14 @@ namespace Ciceksepeti.Business.Service
             _cartRepository = cartRepository;
         }
 
+        /// <summary>
+        /// Sepete Ürün Ekler
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         public async Task<ApiResponse> Add(CartRequestDto request)
         {
-            //Sepete boyutu aşıldı mı
+            //Sepet boyutu aşıldı mı
             if (!IsCartSizeOver(request.UserId))
             {
                 return ApiResponse.ReturnAsFail(data: null, "Toplam sepet kapasitesini aştınız");
@@ -34,8 +38,8 @@ namespace Ciceksepeti.Business.Service
                 return ApiResponse.ReturnAsFail(data: null, "Eklenen Ürün Stokta Yoktur");
             }
 
-            //Ürünü ait maksimum ekleme sınırı aşıldı mı
-            if (!IsItemMaxAdded(request.ProductId, request.Quantity))
+            //Ürüne ait maksimum ekleme sınırı aşıldı mı
+            if (IsItemMaxAdded(request.ProductId, request.Quantity))
             {
                 var product = ProductService.GetProducts().FirstOrDefault(x => x.ProductId == request.ProductId);
 
@@ -52,12 +56,24 @@ namespace Ciceksepeti.Business.Service
                 }
             }
 
-            var entity = request.MapTo<Cart>();
+            var entity = new Cart
+            {
+                ProductId = request.ProductId,
+                Quantity = request.Quantity,
+                UserId = request.UserId
+            };
+
             var result = await _cartRepository.Add(entity);
+
             return result;
         }
 
-        public ApiResponse Update(CartRequestDto request)
+        /// <summary>
+        /// Sepette mevcut olan ürünü günceller
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public ApiResponse Update(CartUpdateRequestDto request)
         {
             //Eklenen ürün stokda var mı
             if (!IsItemInStock(request.ProductId))
@@ -65,8 +81,8 @@ namespace Ciceksepeti.Business.Service
                 return ApiResponse.ReturnAsFail();
             }
 
-            //Ürünü ait maksimum ekleme sınırı aşıldı mı
-            if (!IsItemMaxAdded(request.ProductId, request.Quantity))
+            //Ürüne ait maksimum ekleme sınırı aşıldı mı
+            if (IsItemMaxAdded(request.ProductId, request.Quantity))
             {
                 var product = ProductService.GetProducts().FirstOrDefault(x => x.ProductId == request.ProductId);
 
@@ -83,12 +99,24 @@ namespace Ciceksepeti.Business.Service
                 }
             }
 
-            var entity = request.MapTo<Cart>();
+            var entity = new Cart
+            {
+                Id = request.Id,
+                ProductId = request.ProductId,
+                Quantity = request.Quantity,
+                UserId = request.UserId
+            };
+
             var result = _cartRepository.Update(entity);
 
             return result;
         }
 
+        /// <summary>
+        /// Verilen kullanıcıya ait sepetteki ürünleri döner
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         public async Task<ApiResponse> GetAll(Guid userId)
         {
             if (!GuidIsValid(userId))
@@ -101,14 +129,27 @@ namespace Ciceksepeti.Business.Service
             return result;
         }
 
-        public ApiResponse Delete(CartRequestDto request)
+        /// <summary>
+        /// Sepette mevcut olan ürünü siler
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public ApiResponse Delete(CartDeleteRequestDto request)
         {
-            var entity = request.MapTo<Cart>();
+            var entity = new Cart
+            {
+                Id = request.Id
+            };
             var result = _cartRepository.Delete(entity);
             return result;
         }
 
-        public ApiResponse UpdateCartUser(UpdateCartUserDto request)
+        /// <summary>
+        /// Kullanıcının login olmadan önce eklediği ürünleri login olduktan sonra kullanıcnın ID'sine atar
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        public ApiResponse UpdateCartUser(UpdateCartUserRequestDto request)
         {
             var result = _cartRepository.UpdateCartUser(request);
 
@@ -117,21 +158,42 @@ namespace Ciceksepeti.Business.Service
 
         #region Private Methods
 
+        /// <summary>
+        /// Ürün stok kontrolü
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <returns></returns>
         private bool IsItemInStock(Guid productId)
         {
             return ProductService.GetProducts().FirstOrDefault(x => x.ProductId == productId).Quantity > 0;
         }
 
+        /// <summary>
+        /// Ürüne ait maximum sepete ekleme adedi kontrolü
+        /// </summary>
+        /// <param name="productId"></param>
+        /// <param name="quantity"></param>
+        /// <returns></returns>
         private bool IsItemMaxAdded(Guid productId, int quantity)
         {
             return ProductService.GetProducts().FirstOrDefault(x => x.ProductId == productId).MaxCartQuantity <= quantity;
         }
 
+        /// <summary>
+        /// Sepet kapasitesi kontrolü
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
         private bool IsCartSizeOver(Guid customerId)
         {
             return _cartRepository.CartSize(customerId) < CART_SIZE_LIMIT;
         }
 
+        /// <summary>
+        /// Guid kontrolü
+        /// </summary>
+        /// <param name="guid"></param>
+        /// <returns></returns>
         private bool GuidIsValid(Guid guid)
         {
             var parseGuidControl = Guid.TryParse(guid.ToString(), out var parseGuid);

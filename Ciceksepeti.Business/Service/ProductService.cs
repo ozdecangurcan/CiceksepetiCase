@@ -15,6 +15,10 @@ namespace Ciceksepeti.Business.Service
             public int MaxCartQuantity { get; set; }
         }
 
+        /// <summary>
+        /// Ürünleri dönen fake metot
+        /// </summary>
+        /// <returns></returns>
         public static List<ProductModel> GetProducts()
         {
             var productList = new List<ProductModel>();
