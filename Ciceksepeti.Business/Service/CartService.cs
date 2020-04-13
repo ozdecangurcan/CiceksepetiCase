@@ -66,16 +66,16 @@ namespace Ciceksepeti.Business.Service
 
             var result = await _cartRepository.Add(entity);
 
-            if (result.Data != null)
+            if (result.IsSuccess)
             {
                 var returnData = result.Data as Cart;
 
                 var mappedData = new CartResponseDto
                 {
-                    Id = returnData.Id,
-                    UserId = returnData.UserId,
-                    Quantity = returnData.Quantity,
-                    ProductId = returnData.ProductId
+                    Id = entity.Id,
+                    UserId = entity.UserId,
+                    Quantity = entity.Quantity,
+                    ProductId = entity.ProductId
                 };
 
                 result.Data = mappedData;
@@ -125,16 +125,14 @@ namespace Ciceksepeti.Business.Service
 
             var result = _cartRepository.Update(entity);
 
-            if (result.Data != null)
+            if (result.IsSuccess)
             {
-                var returnData = result.Data as Cart;
-
                 var mappedData = new CartResponseDto
                 {
-                    Id = returnData.Id,
-                    UserId = returnData.UserId,
-                    Quantity = returnData.Quantity,
-                    ProductId = returnData.ProductId
+                    Id = entity.Id,
+                    UserId = entity.UserId,
+                    Quantity = entity.Quantity,
+                    ProductId = entity.ProductId
                 };
 
                 result.Data = mappedData;

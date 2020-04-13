@@ -46,8 +46,14 @@ namespace Ciceksepeti.DataAccess.Service
 
         public ApiResponse Update(Cart entity)
         {
-            _context.Update(entity);
+            var updateData = _context.Carts.FirstOrDefault(x => x.Id == entity.Id);
+
+            updateData.Quantity = entity.Quantity;
+
+            _context.Update(updateData);
+
             var affectedRows = _context.SaveChanges();
+
             return ApiResponse.ReturnAsSuccess(data: affectedRows);
         }
 
