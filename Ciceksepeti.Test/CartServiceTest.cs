@@ -1,6 +1,4 @@
-﻿
-using Ciceksepeti.Business.Interface;
-using Ciceksepeti.Business.Service;
+﻿using Ciceksepeti.Business.Service;
 using Ciceksepeti.DataAccess.Interface;
 using Ciceksepeti.DataAccess.Service;
 using Ciceksepeti.Dto.Cart;
@@ -8,11 +6,8 @@ using Ciceksepeti.Entity;
 using Ciceksepeti.Test.Base;
 using Ciceksepeti.Test.Database;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
 using NUnit.Framework;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -285,6 +280,56 @@ namespace Ciceksepeti.Test
 
             var resultData = result.Data as CartResponseDto;
             Assert.AreEqual(resultData.Quantity, stockQuantity);
+        }
+
+        [Test]
+        public void Update_Cart_Success_Test()
+        {
+            var entity = new Cart
+            {
+                ProductId = Guid.Parse("43f18e01-28c5-468a-b688-c1a896a7291a"),
+                Quantity = 1,
+                UserId = Guid.Parse("05d2f53a-d949-4984-85ec-b8326375ee78")
+            };
+
+            var addResult = _fakeDbContext.Carts.Add(entity);
+
+            _fakeDbContext.SaveChanges();
+
+            var result = _cartRepository.UpdateCartUser(new UpdateCartUserRequestDto
+            {
+                SessionId = Guid.Parse("05d2f53a-d949-4984-85ec-b8326375ee78"),
+                UserId = Guid.NewGuid()
+            });
+
+            Assert.IsTrue(result.IsSuccess);
+            Assert.AreEqual(result.ResultCode, HttpStatusCode.OK);
+            Assert.GreaterOrEqual((int)result.Data, 1);
+        }
+
+        [Test]
+        public void Update_Cart_Not_Update_Test()
+        {
+            var entity = new Cart
+            {
+                ProductId = Guid.NewGuid(),
+                Quantity = 1,
+                UserId = Guid.NewGuid()
+            };
+
+            var addResult = _fakeDbContext.Carts.Add(entity);
+
+            _fakeDbContext.SaveChanges();
+
+            var result = _cartRepository.UpdateCartUser(new UpdateCartUserRequestDto
+            {
+                SessionId = Guid.NewGuid(),
+                UserId = Guid.NewGuid()
+            });
+
+            Assert.IsFalse(result.IsSuccess);
+            Assert.AreEqual(result.ResultCode, HttpStatusCode.NoContent);
+            Assert.AreEqual(result.Data, 0);
         }
     }
 }

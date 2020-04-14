@@ -69,7 +69,7 @@ namespace Ciceksepeti.DataAccess.Service
                 return ApiResponse.ReturnAsSuccess(data: affectedRows);
             }
 
-            return ApiResponse.ReturnAsInformation();
+            return ApiResponse.ReturnAsInformation(data:0);
         }
     }
 }
