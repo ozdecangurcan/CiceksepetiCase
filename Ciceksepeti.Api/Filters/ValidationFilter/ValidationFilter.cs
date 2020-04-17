@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
-namespace Ciceksepeti.Core.Filters.ValidationFilter
+namespace Ciceksepeti.Api.Filters.ValidationFilter
 {
     public class ValidationFilter : IAsyncActionFilter
     {

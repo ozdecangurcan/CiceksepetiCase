@@ -15,7 +15,7 @@ namespace Ciceksepeti.Api
             using (var serviceScope = host.Services.CreateScope())
             {
                 var dbContext = serviceScope.ServiceProvider.GetRequiredService<CartContext>();
-                dbContext.Database.Migrate();
+                //dbContext.Database.Migrate();
             }
 
             host.Run();

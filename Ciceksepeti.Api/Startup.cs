@@ -1,5 +1,5 @@
+using Ciceksepeti.Api.Filters.ValidationFilter;
 using Ciceksepeti.Business.ValidationRules;
-using Ciceksepeti.Core.Filters.ValidationFilter;
 using Ciceksepeti.DataAccess;
 using Ciceksepeti.Dto.Cart;
 using FluentValidation;
@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using System;
 
 namespace Ciceksepeti.Api
 {
@@ -27,9 +28,10 @@ namespace Ciceksepeti.Api
         public void ConfigureServices(IServiceCollection services)
         {
             #region Db Connection
-            
+
             services.AddDbContext<CartContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                //options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
+                options.UseInMemoryDatabase("CartDb")
             );
 
             #endregion
