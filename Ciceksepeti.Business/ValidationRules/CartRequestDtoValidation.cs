@@ -4,6 +4,9 @@ using System;
 
 namespace Ciceksepeti.Business.ValidationRules
 {
+    /// <summary>
+    /// Cart ürün ekleme için validasyon kuralları
+    /// </summary>
     public class CartRequestDtoValidation : AbstractValidator<CartRequestDto>
     {
         public CartRequestDtoValidation()

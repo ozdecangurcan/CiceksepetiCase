@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace Ciceksepeti.Business.Interface
 {
+    /// <summary>
+    /// Cart işlemlerine ait CRUD operasyonları
+    /// </summary>
     public interface ICartService
     {
         Task<ApiResponse> Add(CartRequestDto requet);

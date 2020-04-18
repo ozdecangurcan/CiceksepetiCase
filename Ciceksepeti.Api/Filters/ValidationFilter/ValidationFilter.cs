@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Ciceksepeti.Api.Filters.ValidationFilter
 {
+    /// <summary>
+    /// Model State hatalarının yakalandığı ve kullanıcıya iletildiği validasyon filtresi
+    /// </summary>
     public class ValidationFilter : IAsyncActionFilter
     {
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)

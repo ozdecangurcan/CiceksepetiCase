@@ -6,10 +6,11 @@ using System;
 
 namespace Ciceksepeti.DataAccess.Interface
 {
+    /// <summary>
+    /// Sepet Repo'suna ait custom işlemlerin tanımlandığı interface
+    /// </summary>
     public interface ICartRepository : IAdd, IDelete, IUpdate, IGetAll
     {
-        //Custom Cart Methods
-
         int CartSize(Guid userId);
 
         ApiResponse UpdateCartUser(UpdateCartUserRequestDto request);

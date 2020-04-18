@@ -6,6 +6,9 @@ namespace Ciceksepeti.Business.Service
 {
     public static class ProductService
     {
+        /// <summary>
+        /// Ürün Entity
+        /// </summary>
 
         public class ProductModel
         {

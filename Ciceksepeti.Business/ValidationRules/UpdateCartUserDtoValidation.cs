@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Ciceksepeti.Business.ValidationRules
 {
+    /// <summary>
+    /// Login olan kullanıcının id değeri ile geçici id değerini eşitleme için yapılan işlemin validasyon kuralı
+    /// </summary>
     public class UpdateCartUserDtoValidation : AbstractValidator<UpdateCartUserRequestDto>
     {
         public UpdateCartUserDtoValidation()

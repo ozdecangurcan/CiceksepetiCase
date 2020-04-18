@@ -6,6 +6,9 @@ using System.Text;
 
 namespace Ciceksepeti.Business.ValidationRules
 {
+    /// <summary>
+    /// Cart ürün silme işlemine ait validasyon kuralları
+    /// </summary>
     public class CartDeleteRequestDtoValidation: AbstractValidator<CartDeleteRequestDto>
     {
         public CartDeleteRequestDtoValidation()
